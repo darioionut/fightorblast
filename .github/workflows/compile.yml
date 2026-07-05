@@ -1,0 +1,22 @@
+name: Fight Or Blast
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ps2dev/ps2dev:latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Compile ELF
+        run: |
+          make clean
+          make
+
+      - name: Upload Finished Game
+        uses: actions/upload-artifact@v4
+        with:
+          name: PS2-Game-Executable
+          path: my_ps2_game.elf
